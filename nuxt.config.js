@@ -38,9 +38,22 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    // '@apollo/client',
   ],
+
+  // apollo: {
+  //   clientConfigs: {
+  //     default: {
+  //       httpEndpoint: 'rickandmortyapi.com/graphql/',
+  //     }
+  //   }
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: [
+      '@apollo/client',
+      'ts-invariant/process',
+    ],
   }
 }
