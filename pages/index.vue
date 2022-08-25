@@ -1,10 +1,5 @@
 <template>
   <main>
-   <li>
-   <ul v-for="character in characters" :key="character.id">
-     {{ character.name}}
-   </ul>
-   </li>
     <header>
       <h2 class="logo">
         <nuxt-link to="/">Ecommerce Store</nuxt-link>
@@ -19,47 +14,14 @@
     </header>
     <div class="container section">
       <div class="container__grid">
-        <div class="card">
+        <div class="card" v-for="character in characters.results">
           <img src="" alt="blog photographs"/>
           <div class="pad__card">
             <div class="author">
               <p class="author__name">blog.author</p> <span>|</span>
               <p>blog.date</p>
             </div>
-            <h2 class="title">blog.title</h2>
-            <p>blog.description</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="" alt="blog photographs"/>
-          <div class="pad__card">
-            <div class="author">
-              <p class="author__name">blog.author</p> <span>|</span>
-              <p>blog.date</p>
-            </div>
-            <h2 class="title">blog.title</h2>
-            <p>blog.description</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="" alt="blog photographs"/>
-          <div class="pad__card">
-            <div class="author">
-              <p class="author__name">blog.author</p> <span>|</span>
-              <p>blog.date</p>
-            </div>
-            <h2 class="title">blog.title</h2>
-            <p>blog.description</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="" alt="blog photographs"/>
-          <div class="pad__card">
-            <div class="author">
-              <p class="author__name">blog.author</p> <span>|</span>
-              <p>blog.date</p>
-            </div>
-            <h2 class="title">blog.title</h2>
+            <h2 class="title">{{ character.name }}</h2>
             <p>blog.description</p>
           </div>
         </div>
@@ -70,31 +32,39 @@
 
 <script>
 
-import { useQuery, useResult } from '@vue/apollo-composable'
-import { GET_CHARC } from '@/api/queries'
-
-const { loading, result } = useQuery(GET_CHARC)
-const { data } = useResult(result)
+// import { useQuery, useResult } from '@vue/apollo-composable'
+// import { GET_CHARC } from '@/api/queries'
+//
+// const { loading, result } = useQuery(GET_CHARC)
+// const { data } = useResult(result)
 
 // const { characters } = data
 
-console.log(data);
+// console.log('GRAPH-QL RESPONSE ==>', data);
 
 import gql from 'graphql-tag'
 
-export default {
-  apollo: {
-    characters: gql`
-      query  {
-        characters {
-          results {
-            id
-            name
-            status
-          }
+const ALL_CHARACTERS_QUERY = gql`
+  query ALL_CHARACTERS_QUERY {
+    characters {
+      results {
+        id
+        name
+        gender
+        location {
+          name
         }
       }
-    `,
+    }
+  }
+`;
+
+export default {
+  apollo: {
+    characters: {
+      query: ALL_CHARACTERS_QUERY,
+      prefetch: true,
+    },
   },
 }
 </script>
